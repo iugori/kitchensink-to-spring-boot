@@ -25,12 +25,15 @@
           <tr>
             <td class="titleCell"><label for="email">Email:</label></td>
             <td><input ngModel name="email" #email="ngModel" type="email" email required></td>
-            <td><span class="invalid" *ngIf="email.dirty && email.errors">must be a well-formed email address</span></td>
+            <td><span class="invalid" *ngIf="email.dirty && email.errors">must be a well-formed email address</span>
+            </td>
           </tr>
           <tr>
             <td class="titleCell"><label for="phoneNumber">Phone #:</label></td>
-            <td><input ngModel name="phoneNumber" #phoneNumber="ngModel" minlength="10" maxlength="12" pattern="[0-9]+" required></td>
-            <td><span class="invalid" *ngIf="phoneNumber.dirty && phoneNumber.errors">size must be between 10 and 12</span>
+            <td><input ngModel name="phoneNumber" #phoneNumber="ngModel" minlength="10" maxlength="12" pattern="[0-9]+"
+                required></td>
+            <td><span class="invalid" *ngIf="phoneNumber.dirty && phoneNumber.errors">size must be between 10 and
+                12</span>
             </td>
           </tr>
         </tbody>
@@ -41,11 +44,11 @@
         <tbody>
           <tr>
             <td>
-              <input class="register" type="submit" value="Register" (click)="registerMember(regForm)">
+              <input class="register" type="submit" value="Register" (click)="registerMember()">
             </td>
             <td>
               <ul class="messages">
-                <li class="valid"> Registered! </li>
+                <li class="valid" *ngFor="let message of messages"> {{message}} </li>
               </ul>
             </td>
           </tr>
