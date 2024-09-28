@@ -1,6 +1,7 @@
 {
   "/rest": {
-    "target": "http://localhost:8080/kitchensink",
+    "target": "http://localhost:8081",
+    "xtarget": "http://localhost:8080/kitchensink",
     "secure": false
   }
 }
