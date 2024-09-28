@@ -12,39 +12,37 @@
       <p>You have successfully deployed a Jakarta EE Enterprise
         Application.</p>
     </div>
-
-    <form id="reg" name="reg" method="post" action="/kitchensink/index.jsf" enctype="application/x-www-form-urlencoded">
-      <input type="hidden" name="reg" value="reg">
-
+    <form #regForm="ngForm">
       <h2>Member Registration</h2>
-      <p>Enforces annotation-based constraints defined on the
-        model class.</p>
+      <p>Enforces annotation-based constraints defined on the model class.</p>
       <table>
         <tbody>
           <tr>
-            <td class="titleCell"><label for="reg:name">Name:</label></td>
-            <td><input id="reg:name" type="text" name="reg:name" value=""></td>
-            <td><span class="invalid">size must be between 1 and 25</span></td>
+            <td class="titleCell"><label for="name">Name:</label></td>
+            <td><input ngModel name="name" #name="ngModel" type="text" minlength="1" maxlength="25" required></td>
+            <td><span class="invalid" *ngIf="name.dirty && name.errors">size must be between 1 and 25</span></td>
           </tr>
           <tr>
-            <td class="titleCell"><label for="reg:email">Email:</label></td>
-            <td><input id="reg:email" type="text" name="reg:email" value=""></td>
-            <td><span class="invalid">must be a well-formed email address</span></td>
+            <td class="titleCell"><label for="email">Email:</label></td>
+            <td><input ngModel name="email" #email="ngModel" type="email" email required></td>
+            <td><span class="invalid" *ngIf="email.dirty && email.errors">must be a well-formed email address</span></td>
           </tr>
           <tr>
-            <td class="titleCell"><label for="reg:phoneNumber">Phone #:</label></td>
-            <td><input id="reg:phoneNumber" type="text" name="reg:phoneNumber" value=""></td>
-            <td><span class="invalid">numeric value out of bounds (&lt;12 digits&gt;.&lt;0 digits&gt; expected)</span></td>
+            <td class="titleCell"><label for="phoneNumber">Phone #:</label></td>
+            <td><input ngModel name="phoneNumber" #phoneNumber="ngModel" minlength="10" maxlength="12" pattern="[0-9]+" required></td>
+            <td><span class="invalid" *ngIf="phoneNumber.dirty && phoneNumber.errors">size must be between 10 and 12</span>
+            </td>
           </tr>
         </tbody>
       </table>
-
 
       <p></p>
       <table>
         <tbody>
           <tr>
-            <td><input id="reg:register" type="submit" name="reg:register" value="Register" class="register"></td>
+            <td>
+              <input class="register" type="submit" value="Register" (click)="registerUser(regForm)">
+            </td>
             <td>
               <ul class="messages">
                 <li class="valid"> Registered! </li>
@@ -57,6 +55,7 @@
       <p></p><input type="hidden" name="jakarta.faces.ViewState" id="j_id1:jakarta.faces.ViewState:0"
         value="-4394852657924083159:-5200890054900009758" autocomplete="off">
     </form>
+
     <h2>Members</h2>
     <table class="simpletablestyle">
       <thead>
@@ -71,7 +70,7 @@
       <tfoot>
         <tr>
           <td colspan="5">
-            REST URL for all members: <a href="/rest/members" target="_blank">/rest/members</a></td>
+            REST URL for all members: <a href="{{restRoot}}" target="_blank">{{restRoot}}</a></td>
         </tr>
       </tfoot>
       <tbody>
@@ -80,7 +79,7 @@
           <td>{{member.name}}</td>
           <td>{{member.email}}</td>
           <td>{{member.phoneNumber}}</td>
-          <td><a href="/rest/members/{{member.id}}" target="_blank">/rest/members/{{member.id}}</a></td>
+          <td><a href="{{restRoot}}/{{member.id}}" target="_blank">{{restRoot}}/{{member.id}}</a></td>
         </tr>
       </tbody>
     </table>
