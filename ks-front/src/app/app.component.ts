@@ -3,34 +3,38 @@ import { RouterOutlet } from '@angular/router';
 import { IMember } from './entities/member.model';
 import { CommonModule } from '@angular/common';
 import { NgForm, FormsModule } from '@angular/forms';
+import { MemberService } from './services/member.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterOutlet],
+  imports: [CommonModule, FormsModule,RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = "Welcome to JBoss!";
 
-  restRoot = "/rest/members";
+  restRoot = MemberService.URL;
 
+  members: IMember[] = [];
 
-  members: IMember[] = [
-    {
-      id: 0,
-      name: "John Smith",
-      email: "john.smith@mailinator.com",
-      phoneNumber: "2125551212",
-    }
-  ];
+  constructor(private memberService: MemberService) { }
+
+  ngOnInit(): void {
+    this.getMembers();
+  }
 
   trackById(index: number, item: IMember): number {
     return item.id;
   }
 
-  registerUser(regForm: NgForm) {
+  getMembers(): void {
+    this.memberService.getMembers().subscribe(members => this.members = members);
+  }
+
+  registerMember(regForm: NgForm) {
     const formData = { ...regForm.value, reg: "reg" };
     console.log(formData);
   }
