@@ -38,21 +38,22 @@ export class AppComponent {
   }
 
   registerMember() {
-    console.log(this.regForm);
-    const member = { ...this.regForm.value /*, reg: "reg" */ };
-    this.memberService.addMember(member)
-      .subscribe(r => {
-        if (r) {
-          this.messages = [];
-          for (const key in r) {
-            this.messages.push(`${key}: ${r[key]}`);
+    if (this.regForm.invalid) {
+        Object.keys(this.regForm.controls).forEach((key) => this.regForm.controls[key].markAsDirty());
+    } else {
+      const member = { ...this.regForm.value };
+      this.memberService.addMember(member)
+        .subscribe(r => {
+          if (r) {
+            this.messages = [];
+            Object.keys(r).forEach((key) => this.messages.push(`${key}: ${r[key]}`));
+          } else {
+            this.regForm.resetForm();
+            this.messages = ["Registered!"];
+            this.getMembers();
           }
-        } else {
-          this.regForm.resetForm();
-          this.messages = ["Registered!"];
-          this.getMembers();
-        }
-      });
+        });
+    }
   }
 
 }

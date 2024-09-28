@@ -1,15 +1,17 @@
-package ro.iugori.ks2sb.service.dto;
+package ro.iugori.ks2sb.domain;
 
+
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
-import java.io.Serial;
 import java.io.Serializable;
 
-public class MemberDTO implements Serializable {
+@Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"), name = "member")
+public class MemberEntity implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
-
+    @Id
+    @GeneratedValue
     private Long id;
 
     @NotNull
@@ -25,8 +27,8 @@ public class MemberDTO implements Serializable {
     @NotNull
     @Size(min = 10, max = 12)
     @Digits(fraction = 0, integer = 12)
+    @Column(name = "phone_number")
     private String phoneNumber;
-
 
     public Long getId() {
         return id;
@@ -59,5 +61,5 @@ public class MemberDTO implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
 }
+
