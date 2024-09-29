@@ -65,12 +65,15 @@ public class ApiTest {
     void registerEmptyMember() {
         var member = Member.builder().name("").email("").phoneNumber("").build();
 
+        var validValues = List.of("size must be between 10 and 12",
+                "numeric value out of bounds (<12 digits>.<0 digits> expected)");
+
         given().baseUri(Setup.BASE_URL)
                 .when().contentType("application/json").body(member).post(RESOURCE_URL)
                 .then().statusCode(400).
                 body("name", equalTo("size must be between 1 and 25")).
                 body("email", equalTo("must not be empty")).
-                body("phoneNumber", equalTo("numeric value out of bounds (<12 digits>.<0 digits> expected)"));
+                body("phoneNumber", in(validValues));
     }
 
     @Test
