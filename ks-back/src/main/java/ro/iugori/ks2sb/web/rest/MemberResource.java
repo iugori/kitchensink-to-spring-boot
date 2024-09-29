@@ -1,5 +1,7 @@
 package ro.iugori.ks2sb.web.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,8 @@ public class MemberResource {
         this.memberService = memberService;
     }
 
+    @Operation(summary = "List all members", description = "Returns a list of all members ordered alphabetically by name")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list")
     @GetMapping()
     public ResponseEntity<List<Member>> listAllMembers() {
         var entities = memberService.findAllOrderedByName();
@@ -36,6 +40,9 @@ public class MemberResource {
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
+    @Operation(summary = "Get member by ID", description = "Returns a member by their ID")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved member")
+    @ApiResponse(responseCode = "404", description = "Member not found")
     @GetMapping("/{id}")
     public ResponseEntity<?> lookupMemberById(@PathVariable("id") long id) {
         var member = memberService.findById(id);
@@ -45,6 +52,10 @@ public class MemberResource {
         return new ResponseEntity<>(MemberMapper.entity2dto(member), HttpStatus.OK);
     }
 
+    @Operation(summary = "Add a new member", description = "Creates a new member")
+    @ApiResponse(responseCode = "201", description = "Member successfully created")
+    @ApiResponse(responseCode = "400", description = "There are validation errors or any other unexpected error")
+    @ApiResponse(responseCode = "409", description = "In case of trying to add a member with the same e-mail as a current one")
     @PostMapping
     public ResponseEntity<Map<String, String>> createMember(@RequestBody Member member) {
         var vResult = validator.validate(member);
