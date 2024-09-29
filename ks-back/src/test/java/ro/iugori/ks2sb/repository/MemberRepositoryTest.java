@@ -22,21 +22,21 @@ class MemberRepositoryTest {
         var retrievedMember = memberRepository.findByEmail(JOHN_EMAIL);
         assertThat(retrievedMember).isPresent();
 
-        var member = retrievedMember.get();
-        assertThat(member.getId()).isEqualTo(0L);
-        assertThat(member.getName()).isEqualTo("John Smith");
-        assertThat(member.getPhoneNumber()).isEqualTo("2125551212");
+        var john = retrievedMember.get();
+        assertThat(john.getId()).isEqualTo(0L);
+        assertThat(john.getName()).isEqualTo("John Smith");
+        assertThat(john.getPhoneNumber()).isEqualTo("2125551212");
     }
 
     @Test
     void insertAndList() {
-        var newMember = new MemberEntity();
-        newMember.setName("Jane Doe");
-        newMember.setEmail(JANE_EMAIL);
-        newMember.setPhoneNumber("2125551234");
+        var jane = new MemberEntity();
+        jane.setName("Jane Doe");
+        jane.setEmail(JANE_EMAIL);
+        jane.setPhoneNumber("2125551234");
 
-        newMember = memberRepository.saveAndFlush(newMember);
-        assertThat(newMember.getId()).isGreaterThan(0L);
+        jane = memberRepository.saveAndFlush(jane);
+        assertThat(jane.getId()).isGreaterThan(0L);
 
         var allMembers = memberRepository.findByOrderByNameAsc();
         assertThat(allMembers.size()).isGreaterThanOrEqualTo(2);
