@@ -13,5 +13,5 @@ Steps:
   - git clone https://github.com/iugori/kitchensink-to-spring-boot.git
   - make demo
 - then navigate to http://localhost:8910
-- to visit the API documentation you can navigate to http://localhost:8910/swagger-ui.html
+- to visit the API documentation you can navigate to http://localhost:8911/swagger-ui.html
 
