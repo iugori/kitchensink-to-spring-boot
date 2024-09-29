@@ -30,8 +30,16 @@ start-front-prod-container-step:
 	docker run -d -p 8910:80 --rm --name ks-front ks-front-image 
 
 
+start-back-prod: build-back-prod-image-step start-back-prod-container-step
+## start-back-prod: Builds and starts the back-end container
+	@echo Back-end container is up
 
-demo: build-back-prod-image-step start-back-prod-container-step build-front-prod-image-step start-front-prod-container-step
+start-front-prod: build-front-prod-image-step start-front-prod-container-step
+## start-front-prod: Builds and starts the front-end container
+	@echo Front-end container is up
+
+demo: start-back-prod start-front-prod
 ## demo: Builds and starts the application demo in local environment
 	@echo
 	@echo Please navigate to http://localhost:8910 to visit the application page
+	@echo

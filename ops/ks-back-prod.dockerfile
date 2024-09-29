@@ -7,19 +7,17 @@ RUN tar -xvf apache-maven-3.9.9-bin.tar.gz
 RUN mv apache-maven-3.9.9 /opt/
 ENV M2_HOME='/opt/apache-maven-3.9.9'
 ENV MAVEN_HOME='/opt/apache-maven-3.9.9'
+ENV PATH="$PATH:/opt/apache-maven-3.9.9/bin"
+RUN echo $PATH
 
 WORKDIR /app
-COPY ./ks-back/.mvn ./.mvn
-COPY ./ks-back/mvnw .
-COPY ./ks-back/pom.xml .
-RUN ./mvnw initialize
-
 COPY ./ks-back/src ./src
-RUN ./mvnw clean install
+COPY ./ks-back/pom.xml .
+RUN mvn clean install
+
+#ENTRYPOINT ["/bin/sh"]
 
 FROM openjdk:21-slim
 WORKDIR /app
 COPY --from=build /app/target/*.jar ./app.jar
 ENTRYPOINT ["java", "-jar", "./app.jar"]
-
-# ENTRYPOINT ["/bin/sh"]
