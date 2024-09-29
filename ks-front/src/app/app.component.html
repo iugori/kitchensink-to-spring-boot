@@ -20,19 +20,19 @@
           <tr>
             <td class="titleCell"><label for="name">Name:</label></td>
             <td><input ngModel name="name" #name="ngModel" type="text" minlength="1" maxlength="25" required></td>
-            <td><span class="invalid">{{validationMessages["name"]}}</span></td>
+            <td><span class="invalid" *ngIf="validationMessages['name']">{{validationMessages['name']}}</span></td>
           </tr>
           <tr>
             <td class="titleCell"><label for="email">Email:</label></td>
             <td><input ngModel name="email" #email="ngModel" type="email" email required></td>
-            <td><span class="invalid">{{validationMessages["email"]}}</span>
+            <td><span class="invalid" *ngIf="validationMessages['name']">{{validationMessages['email']}}</span>
             </td>
           </tr>
           <tr>
             <td class="titleCell"><label for="phoneNumber">Phone #:</label></td>
             <td><input ngModel name="phoneNumber" #phoneNumber="ngModel" minlength="10" maxlength="12" pattern="[0-9]+"
                 required></td>
-            <td><span class="invalid">{{validationMessages["phoneNumber"]}}</span>
+            <td><span class="invalid" *ngIf="validationMessages['name']">{{validationMessages['phoneNumber']}}</span>
             </td>
           </tr>
         </tbody>
