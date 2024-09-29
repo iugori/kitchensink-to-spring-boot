@@ -18,17 +18,20 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
         var memberRepository = event.getApplicationContext().getBean(MemberRepository.class);
 
         var member = new MemberEntity();
-        member.setId(0L);
         member.setName("John Smith");
         member.setEmail("john.smith@mailinator.com");
         member.setPhoneNumber("2125551212");
 
-        try {
-            memberRepository.saveAndFlush(member);
-            log.info("John Smith was added");
-        } catch (Exception ex) {
-            log.error("What happened to John Smith?", ex);
-        }
+        memberRepository.findByEmail(member.getEmail()).ifPresentOrElse(
+                (m) -> log.info("Database successfully initialized"),
+                () -> {
+                    try {
+                        memberRepository.saveAndFlush(member);
+                        log.warn("Had to manually add John Smith!");
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
     }
 
 }

@@ -1,4 +1,4 @@
-package ro.iugori.ks2sb.web;
+package ro.iugori.ks2sb.web.rest;
 
 import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
@@ -61,6 +61,7 @@ public class MemberResource {
         } catch (ValidationException ex) {
             var responseObj = new HashMap<String, String>();
             responseObj.put("email", "Email taken");
+            responseObj.put("error", ex.getMessage());
             return new ResponseEntity<>(responseObj, HttpStatus.CONFLICT);
         } catch (Exception ex) {
             var responseObj = new HashMap<String, String>();
