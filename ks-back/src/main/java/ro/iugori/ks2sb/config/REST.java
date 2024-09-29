@@ -6,5 +6,4 @@ public class REST {
     public static final String MEMBER = "/members";
     public static final String PATH_MEMBER = ROOT + MEMBER;
 
-
 }

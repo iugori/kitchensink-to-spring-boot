@@ -17,6 +17,8 @@ RUN mvn clean install
 
 #ENTRYPOINT ["/bin/sh"]
 
+
+#----------------------------------------
 FROM openjdk:21-slim
 WORKDIR /app
 COPY --from=build /app/target/*.jar ./app.jar

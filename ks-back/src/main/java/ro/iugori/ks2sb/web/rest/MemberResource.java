@@ -53,7 +53,7 @@ public class MemberResource {
     }
 
     @Operation(summary = "Add a new member", description = "Creates a new member")
-    @ApiResponse(responseCode = "201", description = "Member successfully created")
+    @ApiResponse(responseCode = "200", description = "Member successfully created")
     @ApiResponse(responseCode = "400", description = "There are validation errors or any other unexpected error")
     @ApiResponse(responseCode = "409", description = "In case of trying to add a member with the same e-mail as a current one")
     @PostMapping
@@ -67,8 +67,10 @@ public class MemberResource {
         try {
             var memberId = memberService.create(member);
             var headers = new LinkedMultiValueMap<String, String>();
-            headers.put("Location", List.of(REST.PATH_MEMBER + "/" + memberId));
-            return new ResponseEntity<>(headers, HttpStatus.CREATED);
+            return new ResponseEntity<>(headers, HttpStatus.OK);
+            // probably this is more REST compliant
+            // headers.put("Location", List.of(REST.PATH_MEMBER + "/" + memberId));
+            // return new ResponseEntity<>(headers, HttpStatus.CREATED);
         } catch (ValidationException ex) {
             var responseObj = new HashMap<String, String>();
             responseObj.put("email", "Email taken");
