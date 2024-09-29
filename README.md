@@ -10,4 +10,4 @@ Installation requirements:
 Installation steps:
 - git clone https://github.com/iugori/kitchensink-to-spring-boot.git
 - make demo
-- navigate to [http://localhost:8910](http://localhost:8910){:target="_blank"}
+- navigate to http://localhost:8910
