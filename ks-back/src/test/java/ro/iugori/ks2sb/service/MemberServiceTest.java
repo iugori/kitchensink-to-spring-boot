@@ -2,9 +2,10 @@ package ro.iugori.ks2sb.service;
 
 import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ro.iugori.ks2sb.domain.MemberEntity;
 import ro.iugori.ks2sb.dto.Member;
 import ro.iugori.ks2sb.repository.MemberRepository;
@@ -16,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
 
     @Mock
