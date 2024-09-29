@@ -4,8 +4,6 @@ import { IMember } from './entities/member.model';
 import { CommonModule } from '@angular/common';
 import { NgForm, FormsModule } from '@angular/forms';
 import { MemberService } from './services/member.service';
-import { HttpClientModule } from '@angular/common/http';
-import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +37,7 @@ export class AppComponent {
 
   registerMember() {
     if (this.regForm.invalid) {
-        Object.keys(this.regForm.controls).forEach((key) => this.regForm.controls[key].markAsDirty());
+      Object.keys(this.regForm.controls).forEach((key) => this.regForm.controls[key].markAsDirty());
     } else {
       const member = { ...this.regForm.value };
       this.memberService.addMember(member)
