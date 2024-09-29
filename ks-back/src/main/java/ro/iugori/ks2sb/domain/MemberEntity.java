@@ -2,32 +2,24 @@ package ro.iugori.ks2sb.domain;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 
 import java.io.Serializable;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"), name = "member")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"), name = "Member")
 public class MemberEntity implements Serializable {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @NotNull
-    @Size(min = 1, max = 25)
-    @Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
+    @Column(name = "name", nullable = false, length = 25)
     private String name;
 
-    @NotNull
-    @NotEmpty
-    @Email
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @NotNull
-    @Size(min = 10, max = 12)
-    @Digits(fraction = 0, integer = 12)
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false, length = 12)
     private String phoneNumber;
 
     public Long getId() {
@@ -61,5 +53,6 @@ public class MemberEntity implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
 }
 

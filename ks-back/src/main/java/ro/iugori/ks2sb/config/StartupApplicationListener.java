@@ -25,9 +25,9 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
 
         try {
             memberRepository.saveAndFlush(member);
-            log.info("John Smith was added");
+            log.warn("Had to manually add John Smith!");
         } catch (Exception ex) {
-            log.error("What happened to John Smith?", ex);
+            log.info("Database initialization successful");
         }
     }
 

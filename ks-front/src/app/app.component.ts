@@ -1,8 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { IMember } from './entities/member.model';
-import { CommonModule } from '@angular/common';
-import { NgForm, FormsModule } from '@angular/forms';
 import { MemberService } from './services/member.service';
 
 @Component({
@@ -17,7 +17,8 @@ export class AppComponent {
   title = "Welcome to JBoss!";
 
   members: IMember[] = [];
-  messages: string[] = [];
+  statusMessages: string[] = [];
+  validationMessages: Record<string, string> = {};
 
   @ViewChild('regForm') regForm!: NgForm;
 
@@ -36,22 +37,24 @@ export class AppComponent {
   }
 
   registerMember() {
-    if (this.regForm.invalid) {
-      Object.keys(this.regForm.controls).forEach((key) => this.regForm.controls[key].markAsDirty());
-    } else {
-      const member = { ...this.regForm.value };
-      this.memberService.addMember(member)
-        .subscribe(r => {
-          if (r) {
-            this.messages = [];
-            Object.keys(r).forEach((key) => this.messages.push(`${key}: ${r[key]}`));
+    const member = { ...this.regForm.value };
+    this.memberService.addMember(member).subscribe(r => {
+      this.statusMessages = [];
+      this.validationMessages = {};
+      if (r) {
+        Object.keys(r).forEach((key) => {
+          if (["name", "email", "phoneNumber"].includes(key)) {
+            this.validationMessages[key] = `${r[key]}`;
           } else {
-            this.regForm.resetForm();
-            this.messages = ["Registered!"];
-            this.getMembers();
+            this.statusMessages.push(`${r[key]}`);
           }
         });
-    }
+      } else {
+        this.regForm.resetForm();
+        this.statusMessages = ["Registered!"];
+        this.getMembers();
+      }
+    });
   }
 
 }
