@@ -10,9 +10,11 @@ COPY ./ks-front/tsconfig.spec.json .
 COPY ./ks-front/src ./src
 RUN npm run build
 
+# ENTRYPOINT ["/bin/bash"]
+
+
+#----------------------------------------
 FROM nginx:stable
 COPY --from=build /app/dist/ks-front/browser /usr/share/nginx/html
 COPY ./ops/ks-front-nginx-default.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
-
-# ENTRYPOINT ["/bin/bash"]
