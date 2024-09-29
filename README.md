@@ -4,7 +4,7 @@ This is a migration of the [kitchensink](https://github.com/jboss-developer/jbos
 
 Installation requirements:
 - Docker
-- [Git for Windows](https://git-scm.com/downloads/win) + Git Bash (2.46.2.windows.1)
+- [Git for Windows](https://git-scm.com/downloads/win) + Git Bash
 - [GNU Make for Windows](https://gnuwin32.sourceforge.net/packages/make.htm)
 
 Installation steps:
