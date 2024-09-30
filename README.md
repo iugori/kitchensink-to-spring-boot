@@ -1,18 +1,17 @@
 - [Modernizing a JavaEE application (2024)](#modernizing-a-javaee-application-2024)
   - [Quickstart](#quickstart)
-  - [Migration highlights](#migration-highlights)
+  - [Project highlights](#project-highlights)
     - [Folder structure](#folder-structure)
     - [Technologies](#technologies)
-    - [QA pointers](#qa-pointers)
   - [Detailed workspace configuration](#detailed-workspace-configuration)
   - [Referenceas](#referenceas)
 
 
 # Modernizing a JavaEE application (2024)
 
-This is a migration of the [kitchensink](https://github.com/jboss-developer/jboss-eap-quickstarts/tree/8.0.x/kitchensink) JBoss demo application to Spring Boot / Angular stack.
+This is a migration of the *kitchensink* JBoss demo application to Spring Boot / Angular stack.
 
-![application form](ops/doc/pic/kitchensink-form.jpg#center)
+![kitchensink application homepage](ops/doc/pic/kitchensink-form.jpg#center)
 
 The application features a three field registration form that allows the addition of new members (with proper validation). 
 Below the form there is the list of all the registered members ordered alphabetically by name with a REST URL allowing the extraction of their individual details in JSON format.
@@ -36,15 +35,47 @@ The purpose of the migration was to preserve the original's application function
 
 To visit the API documentation you can navigate to http://localhost:8911/swagger-ui.html .
 
-## Migration highlights
+## Project highlights
 
 ### Folder structure
 
-
+- *ks-back* - contains the SpringBoot application source code
+- *ks-front* - contains the Angular application source code
+- *ops* - contains various maintenance resources (e.g. configuration and deployment scripts and also documentation resources)
+- *qa* - contains black-box testing solutions:
+  - *api* - a Java project containing REST Assured based tests for validating the REST API behavior
+  - *ui* - a Cypress project for testing the UI
+  - Remark: both test suites run successfully on both the legacy applciation and the newly developed one
+- root resources
+  - *Makefile* - provides a consolidated interface for local deployment scripts
 
 ### Technologies
 
-### QA pointers
+- Back-end
+  - OpenJDK 21
+  - SpringBoot 3.3.4
+  - JPA 
+  - REST
+  - OpenAPI 3
+  - H2 - in memory SQL database
+  - JUnit 5 + Mockito
+- Front-end
+  - Angular 18
+  - template based forms
+  - SCSS style sheets
+  - TypeScript 5.4
+- QA
+  - White-box 
+    - @DataJpaTest - for back-end repositories
+    - @ExtendWith(MockitoExtension.class) - for back-end services
+    - @SpringBootTest - for back-end context creation
+  - Black-box
+    - API: REST Assured (+ Lombok + JavaFaker) based test suites
+    - UI: Cypress based test suites
+- Deployment
+  - Docker containers
+  - Nginx for wrapping Angular application
+  - Makefile based configuration and dployment management
 
 ## Detailed workspace configuration
 
@@ -54,12 +85,12 @@ The development was performed on Windows 11. The recommended shell is GitBash.
 - Docker (optional for development)
 - Git for Windows + Git Bash v2.46.2.windows.1 +
 - GNU Make for Windows (optional for development)
-- Maven 3.9.9
+- Maven ~3.9.9
 - Node.js v20.17.0
 - OpenJDK 21
 - Visual Studio Code 
 
-**Environment configuration:**
+**Environment variables:**
 - PATH - should contain at least 
   - C:\Windows\System32
   - make (e.g. ...\GnuWin32\bin)
@@ -76,9 +107,11 @@ The development was performed on Windows 11. The recommended shell is GitBash.
 - in *ks-front*
   - `npm install`
   - `npm start`
+    - this will start the Angular application
+    - if the browser page does not open automatically you can try navigating to http://localhost:4200
 
 ## Referenceas
 
-
+- [The original *kitchensink* application repository](https://github.com/jboss-developer/jboss-eap-quickstarts/tree/8.0.x/kitchensink) 
 
 
